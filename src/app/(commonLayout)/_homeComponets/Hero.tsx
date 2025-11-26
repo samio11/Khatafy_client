@@ -32,40 +32,80 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
         {/* Navigation */}
         <nav className="flex justify-between items-center mb-16">
+          {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center shadow-md">
               <Users className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl text-gray-900">Khatafy</span>
+            <span className="text-2xl font-semibold text-gray-900">
+              Khatafy
+            </span>
           </div>
-          <div className="flex gap-4">
-            {/* <button className="px-5 py-2 text-gray-700 hover:text-gray-900 transition-colors">
-              Login
-            </button>
-            <button className="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/30">
-              Get Started
-            </button> */}
 
+          {/* Right Section */}
+          <div className="flex items-center gap-4">
             {user ? (
-              <div>
+              <>
+                {/* User Info */}
+                <div className="flex items-center gap-3 px-4 py-2 bg-white/70 backdrop-blur-md border border-emerald-100 rounded-xl shadow-sm hover:shadow-md transition-all">
+                  {/* Avatar */}
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-medium shadow-md">
+                    {user?.name?.charAt(0)?.toUpperCase()}
+                  </div>
+
+                  {/* Name + Role */}
+                  <div className="flex flex-col">
+                    <span className="text-gray-900 font-medium leading-tight">
+                      {user?.name}
+                    </span>
+                    <span
+                      className={`
+                text-xs px-2 py-0.5 rounded-full font-medium mt-1
+                ${
+                  user.role === "admin"
+                    ? "bg-red-100 text-red-700"
+                    : user.role === "manager"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-emerald-100 text-emerald-700"
+                }
+              `}
+                    >
+                      {user.role.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Dashboard Button */}
+                <Link
+                  href={
+                    user.role === "admin"
+                      ? "/admin/dashboard"
+                      : user.role === "manager"
+                      ? "/manager/dashboard"
+                      : "/member/dashboard"
+                  }
+                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md hover:shadow-lg hover:from-emerald-700 hover:to-teal-700 transition-all"
+                >
+                  Dashboard
+                </Link>
+
+                {/* Logout Button */}
                 <button
-                  onClick={() => {
-                    handleLogout();
-                  }}
-                  className="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/30"
+                  onClick={handleLogout}
+                  className="px-5 py-2 rounded-lg bg-white text-gray-700 border border-gray-300 shadow-sm hover:bg-gray-50 hover:shadow transition-all"
                 >
                   Logout
                 </button>
-              </div>
+              </>
             ) : (
-              <div>
+              <>
                 <Link
                   href={"/login"}
                   className="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/30"
                 >
                   Login
                 </Link>
-              </div>
+              </>
             )}
           </div>
         </nav>

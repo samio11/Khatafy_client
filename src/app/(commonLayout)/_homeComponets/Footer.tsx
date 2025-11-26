@@ -11,7 +11,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
                 <Users className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl text-white">MessMate</span>
+              <span className="text-2xl text-white">Khatafy</span>
             </div>
             <p className="text-gray-400 leading-relaxed">
               The smartest way to manage bachelor mess expenses in Bangladesh.
