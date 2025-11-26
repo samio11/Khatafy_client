@@ -21,12 +21,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const handleUser = async () => {
     try {
       const userData = await getCurrentUser();
-      console.log(userData);
       setUser(userData);
-      setIsLoading(false);
     } catch (err) {
-      console.log(err);
       setUser(null);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {

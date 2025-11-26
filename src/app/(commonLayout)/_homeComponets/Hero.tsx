@@ -2,10 +2,24 @@
 import { ChevronRight, Users, Receipt, TrendingDown } from "lucide-react";
 import { ImageWithFallback } from "./ImageWithFallback";
 import { useUser } from "@/contexts/UserContext";
+import Link from "next/link";
+import { toast } from "sonner";
+import { logoutUser } from "@/services/auth";
+import { useEffect } from "react";
 
 export default function Hero() {
-  const { user, isLoading } = useUser();
-  console.log(user, isLoading);
+  const { user, refetchUser } = useUser();
+
+  const handleLogout = async () => {
+    const toastId = toast.loading("User is Logging out");
+    try {
+      await logoutUser();
+      await refetchUser();
+      toast.success("user is Logged Out", { id: toastId });
+    } catch (err) {
+      toast.error("user is Logged Out failed", { id: toastId });
+    }
+  };
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
       {/* Decorative background elements */}
@@ -25,12 +39,34 @@ export default function Hero() {
             <span className="text-2xl text-gray-900">Khatafy</span>
           </div>
           <div className="flex gap-4">
-            <button className="px-5 py-2 text-gray-700 hover:text-gray-900 transition-colors">
+            {/* <button className="px-5 py-2 text-gray-700 hover:text-gray-900 transition-colors">
               Login
             </button>
             <button className="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/30">
               Get Started
-            </button>
+            </button> */}
+
+            {user ? (
+              <div>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                  className="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/30"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div>
+                <Link
+                  href={"/login"}
+                  className="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/30"
+                >
+                  Login
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
 

@@ -21,6 +21,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { userLogin } from "@/services/auth";
+import { useUser } from "@/contexts/UserContext";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -34,6 +35,7 @@ export function LoginForm({
   const route = useRouter();
   const s1 = useSearchParams();
   const redirectPath = s1.get("redirectPath") || "/";
+  const { refetchUser } = useUser();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -48,6 +50,7 @@ export function LoginForm({
     try {
       const result = await userLogin(loginInfo);
       if (result?.success) {
+        await refetchUser();
         toast.success(result?.message, { id: toastId });
         route.push(redirectPath);
       } else {
