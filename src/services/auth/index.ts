@@ -91,10 +91,11 @@ export const unKickedUser = async (userId: string) => {
 
 export const getCurrentUser = async () => {
   try {
-    const token = (await cookies()).get("accessToken")!.value;
+    const token = (await cookies()).get("accessToken")?.value;
+
     let decoded = null;
     if (token) {
-      decoded = jwtDecode<IUser>(token);
+      decoded = await jwtDecode<IUser>(token);
       return decoded;
     } else {
       return null;

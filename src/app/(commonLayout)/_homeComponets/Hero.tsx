@@ -1,7 +1,11 @@
+"use client";
 import { ChevronRight, Users, Receipt, TrendingDown } from "lucide-react";
 import { ImageWithFallback } from "./ImageWithFallback";
+import { useUser } from "@/contexts/UserContext";
 
 export default function Hero() {
+  const { user, isLoading } = useUser();
+  console.log(user, isLoading);
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
       {/* Decorative background elements */}

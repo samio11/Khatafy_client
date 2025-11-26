@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import { getCurrentUser } from "@/services/auth";
 import { IUser } from "@/types/user";
@@ -21,6 +21,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const handleUser = async () => {
     try {
       const userData = await getCurrentUser();
+      console.log(userData);
       setUser(userData);
       setIsLoading(false);
     } catch (err) {
@@ -29,8 +30,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
   useEffect(() => {
-    handleUser;
+    handleUser();
   }, []);
+
   return (
     <UserContext.Provider
       value={{
