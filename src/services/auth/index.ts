@@ -1,5 +1,6 @@
 "use server";
 
+import { IUser } from "@/types/user";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -91,9 +92,9 @@ export const unKickedUser = async (userId: string) => {
 export const getCurrentUser = async () => {
   try {
     const token = (await cookies()).get("accessToken")!.value;
-    let decoded;
+    let decoded = null;
     if (token) {
-      decoded = jwtDecode(token);
+      decoded = jwtDecode<IUser>(token);
       return decoded;
     } else {
       return null;
