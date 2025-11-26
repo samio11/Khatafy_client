@@ -2,6 +2,7 @@
 
 import { IUser } from "@/types/user";
 import { jwtDecode } from "jwt-decode";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
@@ -44,6 +45,7 @@ export const userRegister = async (payload: FormData) => {
         body: payload,
       }
     );
+    revalidateTag("user", "max");
     const result = await res.json();
     return result;
   } catch (err) {
@@ -63,6 +65,7 @@ export const kickedUser = async (userId: string) => {
         },
       }
     );
+    revalidateTag("user", "max");
     const result = await res.json();
     return result;
   } catch (err) {
@@ -81,6 +84,7 @@ export const unKickedUser = async (userId: string) => {
         },
       }
     );
+    revalidateTag("user", "max");
     const result = await res.json();
     return result;
   } catch (err) {
@@ -100,6 +104,59 @@ export const getCurrentUser = async () => {
     } else {
       return null;
     }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const changeStatusToManager = async (userId: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/auth/assign-manager/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    revalidateTag("user", "max");
+    const result = await res.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const getAllUser = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/auth/users`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      next: {
+        tags: ["user"],
+      },
+    });
+    const result = await res.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const getAUser = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/auth/user`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+    });
+    const result = await res.json();
+    return result;
   } catch (err) {
     console.log(err);
     throw err;
