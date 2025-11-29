@@ -1,5 +1,5 @@
+"use client";
 import * as React from "react";
-import { GalleryVerticalEnd } from "lucide-react";
 
 import {
   Sidebar,
@@ -15,6 +15,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { HandPlatter } from "lucide-react";
 
 // This is sample data.
 const data = {
@@ -26,7 +28,6 @@ const data = {
         {
           title: "Admin Dashboard",
           url: "/admin/dashboard",
-          isActive: true,
         },
         {
           title: "Manage User",
@@ -42,12 +43,17 @@ const data = {
         },
       ],
     },
+    {
+      title: "Back Home",
+      url: "/",
+    },
   ],
 };
 
 export function AdminAppSideBar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const path = usePathname();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -56,11 +62,10 @@ export function AdminAppSideBar({
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <GalleryVerticalEnd className="size-4" />
+                  <HandPlatter className="size-6"></HandPlatter>
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium">Documentation</span>
-                  <span className="">v1.0.0</span>
+                  <span className="font-medium">Kartify</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -81,7 +86,10 @@ export function AdminAppSideBar({
                   <SidebarMenuSub>
                     {item.items.map((item) => (
                       <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={item.isActive}>
+                        <SidebarMenuSubButton
+                          asChild
+                          isActive={item.url === path}
+                        >
                           <Link href={item.url}>{item.title}</Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>

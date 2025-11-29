@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Khatafy",
   description: "Mess Manegment site",
+  icons: {
+    icon: "logo.jpg",
+  },
 };
 
 export default function RootLayout({
