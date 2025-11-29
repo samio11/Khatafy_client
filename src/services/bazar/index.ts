@@ -134,3 +134,17 @@ export const getABazarDataInMess = async (bazarId: string) => {
     throw err;
   }
 };
+export const getAllBazar = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/bazar/bazar-all`,
+      {
+        method: "GET",
+      }
+    ).then((X) => X.json());
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

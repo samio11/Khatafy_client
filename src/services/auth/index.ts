@@ -147,6 +147,27 @@ export const getAllUser = async () => {
     throw err;
   }
 };
+
+export const getUsersByRole = async (role: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/auth/users?role=${role}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: { tags: ["user"] },
+      }
+    );
+
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export const getAUser = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/auth/user`, {

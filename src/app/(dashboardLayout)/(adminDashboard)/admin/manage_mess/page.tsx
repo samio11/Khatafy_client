@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Eye, Users } from "lucide-react";
 import CreateMessModal from "./_components/CreateMessModal";
 import ViewMessModal from "./_components/ViewMessModal";
+import Loading from "@/app/loading";
 
 export default function ManageMess() {
   const [messList, setMessList] = useState<any[]>([]);
@@ -48,7 +49,9 @@ export default function ManageMess() {
 
         <CardContent>
           {isLoading ? (
-            <p className="text-center py-4">Loading...</p>
+            <p className="text-center py-4">
+              <Loading></Loading>
+            </p>
           ) : messList.length === 0 ? (
             <p className="text-center py-4 text-gray-500">No Mess Found</p>
           ) : (
