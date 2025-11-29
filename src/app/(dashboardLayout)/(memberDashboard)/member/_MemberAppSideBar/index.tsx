@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { GalleryVerticalEnd, HandPlatter } from "lucide-react";
 
@@ -14,13 +15,14 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { usePathname } from "next/navigation";
 
 // This is sample data.
 const data = {
   navMain: [
     {
       title: "Member",
-      url: "#",
+      url: "/manager/dashboard",
       items: [
         {
           title: "Installation",
@@ -39,6 +41,8 @@ const data = {
 export function MemberAppSideBar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const path = usePathname();
+  console.log(path);
   return (
     <Sidebar {...props}>
       <SidebarHeader>
