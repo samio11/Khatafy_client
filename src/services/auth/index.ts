@@ -162,3 +162,59 @@ export const getAUser = async () => {
     throw err;
   }
 };
+export const getAdminState = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/auth/admin-state`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const getAdminUserState = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/auth/admin-user`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const changeUserData = async (payload: FieldValues) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/auth/user/update`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

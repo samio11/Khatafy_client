@@ -1,3 +1,4 @@
+"use server";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -8,7 +9,7 @@ export const createMess = async (payload: FieldValues) => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: (await cookies()).get("accessToken")!.value || "",
       },
       body: JSON.stringify(payload),
     }).then((x) => x.json());
@@ -73,7 +74,7 @@ export const getAllMess = async () => {
         tags: ["mess"],
       },
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: (await cookies()).get("accessToken")!.value || "",
       },
     }).then((x) => x.json());
     return res;

@@ -14,22 +14,31 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 // This is sample data.
 const data = {
   navMain: [
     {
       title: "Admin",
-      url: "#",
+      url: "/admin/dashboard",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Admin Dashboard",
+          url: "/admin/dashboard",
+          isActive: true,
         },
         {
-          title: "Project Structure",
-          url: "#",
-          isActive: true,
+          title: "Manage User",
+          url: "/admin/manage_user",
+        },
+        {
+          title: "Manage Mess",
+          url: "/admin/manage_mess",
+        },
+        {
+          title: "Manage Bazar",
+          url: "/admin/manage_bazar",
         },
       ],
     },
@@ -64,16 +73,16 @@ export function AdminAppSideBar({
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
+                  <Link href={item.url} className="font-medium">
                     {item.title}
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <SidebarMenuSub>
                     {item.items.map((item) => (
                       <SidebarMenuSubItem key={item.title}>
                         <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
+                          <Link href={item.url}>{item.title}</Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
