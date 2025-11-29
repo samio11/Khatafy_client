@@ -42,6 +42,8 @@ import {
   Ban,
   CheckCircle,
 } from "lucide-react";
+import Loading from "@/app/loading";
+import Image from "next/image";
 
 export default function ManageUser() {
   const [users, setUsers] = useState<any[]>([]);
@@ -102,12 +104,15 @@ export default function ManageUser() {
 
       <CardContent>
         {loading ? (
-          <p className="text-center py-6">Loading...</p>
+          <p className="text-center py-6">
+            <Loading></Loading>
+          </p>
         ) : (
           <div className="overflow-x-auto rounded-xl border">
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>User</TableHead>
                   <TableHead>User</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Role</TableHead>
@@ -119,6 +124,15 @@ export default function ManageUser() {
               <TableBody>
                 {users?.map((u) => (
                   <TableRow key={u._id}>
+                    <TableCell>
+                      <Image
+                        src={u.photo}
+                        alt={u.name}
+                        width={50}
+                        height={50}
+                        className="rounded-lg"
+                      ></Image>
+                    </TableCell>
                     <TableCell className="font-medium flex gap-2 items-center">
                       <UserRound size={18} />
                       {u.name}
