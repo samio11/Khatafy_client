@@ -174,3 +174,21 @@ export const getMessBudgetStats = async () => {
     throw err;
   }
 };
+
+export const getMemberMess = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/mess/get-member`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value || "",
+        },
+      }
+    ).then((x) => x.json());
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

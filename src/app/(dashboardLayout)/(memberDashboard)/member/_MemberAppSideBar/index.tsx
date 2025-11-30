@@ -16,22 +16,22 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 // This is sample data.
 const data = {
   navMain: [
     {
       title: "Member",
-      url: "/manager/dashboard",
+      url: "/member/dashboard",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Member DashBoard",
+          url: "/member/dashboard",
         },
         {
-          title: "Project Structure",
-          url: "#",
-          isActive: true,
+          title: "View Mess",
+          url: "/member/view-mess",
         },
       ],
     },
@@ -42,21 +42,21 @@ export function MemberAppSideBar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const path = usePathname();
-  console.log(path);
+  // console.log(path);
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <HandPlatter className="size-6"></HandPlatter>
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-medium">Kartify</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -67,16 +67,19 @@ export function MemberAppSideBar({
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
+                  <Link href={item.url} className="font-medium">
                     {item.title}
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <SidebarMenuSub>
                     {item.items.map((item) => (
                       <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
+                        <SidebarMenuSubButton
+                          asChild
+                          isActive={item.url === path}
+                        >
+                          <Link href={item.url}>{item.title}</Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
