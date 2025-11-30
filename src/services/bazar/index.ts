@@ -166,3 +166,17 @@ export const getAllBazar = async () => {
     throw err;
   }
 };
+export const getAllBazarForMember = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bazar/member`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+    }).then((X) => X.json());
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

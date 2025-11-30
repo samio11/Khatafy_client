@@ -33,6 +33,10 @@ const data = {
           title: "View Mess",
           url: "/member/view-mess",
         },
+        {
+          title: "Manage Bazar",
+          url: "/member/manage-bazar",
+        },
       ],
     },
   ],
