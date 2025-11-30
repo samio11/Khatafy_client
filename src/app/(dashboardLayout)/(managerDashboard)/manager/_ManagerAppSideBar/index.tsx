@@ -37,6 +37,10 @@ const data = {
           title: "Mess Managment",
           url: "/manager/manage_mess",
         },
+        {
+          title: "Bazar Managment",
+          url: "/manager/manage_bazar",
+        },
       ],
     },
   ],

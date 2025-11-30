@@ -103,6 +103,24 @@ export const changeVerifyOfBazar = async (
   }
 };
 
+export const getBazarsByManager = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/bazar/get-bazar-manager`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    ).then((X) => X.json());
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export const getAllBazarDataInMess = async (messId: string) => {
   try {
     const res = await fetch(

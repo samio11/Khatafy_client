@@ -9,6 +9,7 @@ import {
   deleteMessData,
   invitedUserToMess,
   shiftManagerRole,
+  removeMemberFromMess,
 } from "@/services/mess";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,6 +64,24 @@ export default function ManageMess() {
   useEffect(() => {
     fetchMess();
   }, []);
+
+  // --------------------------------------------------------
+  // Delete Mess Member
+  // --------------------------------------------------------
+  const handleRemoveMember = async (messId: string, userId: string) => {
+    try {
+      const res = await removeMemberFromMess(messId, userId);
+
+      if (res?.success) {
+        toast.success("Member removed successfully");
+        fetchMess();
+      } else {
+        toast.error(res?.message || "Failed to remove member");
+      }
+    } catch (err) {
+      toast.error("Failed to remove member");
+    }
+  };
 
   // --------------------------------------------------------
   // FORMS
@@ -193,17 +212,30 @@ export default function ManageMess() {
                 {mess.members?.map((m: any) => (
                   <div
                     key={m._id}
-                    className="flex items-center gap-3 p-2 bg-gray-50 rounded-md"
+                    className="flex items-center justify-between p-2 bg-gray-50 rounded-md"
                   >
-                    <img
-                      src={m.photo}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                    <div>
-                      <p className="font-medium">{m.name}</p>
-                      <p className="text-sm text-gray-600">{m.email}</p>
-                      <p className="text-sm text-gray-600">Id:- {m._id}</p>
+                    {/* Left Side: Member Info */}
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={m.photo}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                      <div>
+                        <p className="font-medium">{m.name}</p>
+                        <p className="text-sm text-gray-600">{m.email}</p>
+                        <p className="text-sm text-gray-600">Id: {m._id}</p>
+                      </div>
                     </div>
+
+                    {/* Right Side: Remove Button */}
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleRemoveMember(mess._id, m._id)}
+                      className="text-sm"
+                    >
+                      Remove
+                    </Button>
                   </div>
                 ))}
               </div>
