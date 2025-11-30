@@ -156,3 +156,21 @@ export const removeMemberFromMess = async (messId: string, userId: string) => {
     throw err;
   }
 };
+
+export const getMessBudgetStats = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/mess/manager/state`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value || "",
+        },
+      }
+    ).then((x) => x.json());
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
